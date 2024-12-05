@@ -1,0 +1,12 @@
+Test ham testArrayDataset: 
+Tap du lieu:hus.oop.statistics.BasicStatistic@723279cf
+Kich co:0
+Max:0.0
+Min:0.0
+Ky vong:NaN
+Phuong sai:NaN
+Rank:[]
+
+Test ham testListDataset: 
+Tap du lieu:hus.oop.statistics.BasicStatistic@7cd84586
+Kich co:0

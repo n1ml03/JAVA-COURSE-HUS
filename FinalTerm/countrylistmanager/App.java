@@ -1,0 +1,174 @@
+package com.countrylistmanager;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class App {
+    private static final String COMMA_DELIMITER = ",";
+
+    public static void readListData(String filePath) {
+        try (BufferedReader dataReader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = dataReader.readLine()) != null) {
+                List<String> dataList = parseDataLineToList(line);
+                if (dataList.size() != 6 || dataList.get(0).equals("code")) {
+                    continue;
+                }
+
+                CountryData newCountryData = new CountryData.CountryDataBuilder(dataList.get(0))
+                        .setName(dataList.get(1))
+                        .setPopulation(Integer.parseInt(dataList.get(2)))
+                        .setArea(Double.parseDouble(dataList.get(3)))
+                        .setGdp(Double.parseDouble(dataList.get(4)))
+                        .build();
+
+                AbstractCountry country = CountryFactory.getInstance().createCountry(dataList.get(5), newCountryData);
+                CountryListManager.getInstance().append(country);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<String> parseDataLineToList(String dataLine) {
+        if (dataLine == null) {
+            return new ArrayList<>();
+        }
+        return List.of(dataLine.split(COMMA_DELIMITER));
+    }
+
+    public static String[] parseDataLineToArray(String dataLine) {
+        if (dataLine == null) {
+            return null;
+        }
+
+        return dataLine.split(COMMA_DELIMITER);
+    }
+
+    public static void main(String[] args) {
+        init();
+        testOriginalData();
+        testSortPopulationIncreasing();
+        testSortPopulationDecreasing();
+        testSortAreaIncreasing();
+        testSortAreaDecreasing();
+        testSortGdpIncreasing();
+        testSortGdpDecreasing();
+        testFilterContinent();
+        testFilterCountriesMostPopulous();
+        testFilterCountriesLeastPopulous();
+        testFilterCountriesLargestArea();
+        testFilterCountriesSmallestArea();
+        testFilterCountriesHighestGdp();
+        testFilterCountriesLowestGdp();
+    }
+
+    public static void init() {
+        String filePath = "data/countries.csv";
+        readListData(filePath);
+    }
+
+    public static void testOriginalData() {
+        CountryListManager.getInstance();
+        String codes = CountryListManager.codeOfCountriesToString(CountryListManager.getInstance().getCountryList());
+        System.out.print(codes);
+    }
+
+    public static void testSortPopulationIncreasing() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().sortPopulationIncreasing();
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testSortPopulationIncreasing: " + codeString);
+    }
+
+    public static void testSortPopulationDecreasing() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().sortPopulationDecreasing();
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testSortPopulationDecreasing: " + codeString);
+    }
+
+    public static void testSortAreaIncreasing() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().sortAreaIncreasing();
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testSortAreaIncreasing: " + codeString);
+    }
+
+    public static void testSortAreaDecreasing() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().sortAreaDecreasing();
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testSortAreaDecreasing: " + codeString);
+    }
+
+    public static void testSortGdpIncreasing() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().sortGdpIncreasing();
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testSortGdpIncreasing: " + codeString);
+    }
+
+    public static void testSortGdpDecreasing() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().sortGdpDecreasing();
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testSortGdpDecreasing: " + codeString);
+    }
+
+    public static void testFilterContinent() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().filterContinent("Asia");
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testFilterContinent (Asia): " + codeString);
+    }
+
+    public static void testFilterCountriesMostPopulous() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().sortPopulationDecreasing();
+        List<AbstractCountry> nMostPopulousCountries = new LinkedList<>();
+        for (int i = 0; i < 5; i++) {
+            nMostPopulousCountries.add(countries.get(i));
+        }
+        CountryListManager.getInstance();
+        String codeString = CountryListManager.codeOfCountriesToString(nMostPopulousCountries);
+        System.out.print(codeString);
+    }
+
+    public static void testFilterCountriesLeastPopulous() {
+        List<AbstractCountry> countries = CountryListManager.getInstance().sortPopulationIncreasing();
+        List<AbstractCountry> nLeastPopulousCountries = new LinkedList<>();
+        for (int i = 0; i < 5; i++) {
+            nLeastPopulousCountries.add(countries.get(i));
+        }
+
+        CountryListManager.getInstance();
+        String codeString = CountryListManager.codeOfCountriesToString(nLeastPopulousCountries);
+        System.out.print(codeString);
+    }
+
+    public static void testFilterCountriesLargestArea() {
+        init();
+        List<AbstractCountry> countries = CountryListManager.getInstance().filterCountriesLargestArea(5);
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testFilterCountriesLargestArea: " + codeString);
+    }
+
+    public static void testFilterCountriesSmallestArea() {
+        init();
+        List<AbstractCountry> countries = CountryListManager.getInstance().filterCountriesSmallestArea(5);
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testFilterCountriesSmallestArea: " + codeString);
+    }
+
+    public static void testFilterCountriesHighestGdp() {
+        init();
+        List<AbstractCountry> countries = CountryListManager.getInstance().filterCountriesHighestGdp(5);
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testFilterCountriesHighestGdp: " + codeString);
+    }
+
+    public static void testFilterCountriesLowestGdp() {
+        init();
+        List<AbstractCountry> countries = CountryListManager.getInstance().filterCountriesLowestGdp(5);
+        String codeString = CountryListManager.codeOfCountriesToString(countries);
+        System.out.println("testFilterCountriesLowestGdp: " + codeString);
+    }
+
+}

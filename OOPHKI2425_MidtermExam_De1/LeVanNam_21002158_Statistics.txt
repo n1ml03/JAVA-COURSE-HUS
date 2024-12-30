@@ -1,7 +1,0 @@
-Tap du lieu: hus.oop.statistics.BasicStatistic@33909752
-Kich co: 0
-Max: 0.0
-Min: 0.0
-Ky vong: NaN
-Phuong sai: NaN
-Rank: []

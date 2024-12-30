@@ -1,3 +1,5 @@
+package hus.oop.basicstatistics;
+
 import java.util.NoSuchElementException;
 
 public class BasicStatistic {
@@ -7,6 +9,7 @@ public class BasicStatistic {
      * Khởi tạo dữ liệu cho BasicStatistic.
      */
     public BasicStatistic(MyList data) {
+        /* TODO */
         this.data = data;
     }
 
@@ -15,6 +18,7 @@ public class BasicStatistic {
      * @return giá trị lớn nhất.
      */
     public double max() {
+        /* TODO */
         if (data.size() == 0) {
             throw new NoSuchElementException("The list is empty.");
         }
@@ -33,6 +37,7 @@ public class BasicStatistic {
      * @return giá trị nhỏ nhất.
      */
     public double min() {
+        /* TODO */
         if (data.size() == 0) {
             throw new NoSuchElementException("The list is empty.");
         }
@@ -51,6 +56,7 @@ public class BasicStatistic {
      * @return kỳ vọng.
      */
     public double mean() {
+        /* TODO */
         if (data.size() == 0) {
             throw new NoSuchElementException("The list is empty.");
         }
@@ -67,6 +73,7 @@ public class BasicStatistic {
      * @return phương sai.
      */
     public double variance() {
+        /* TODO */
         if (data.size() == 0) {
             throw new NoSuchElementException("The list is empty.");
         }

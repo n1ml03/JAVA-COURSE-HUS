@@ -48,7 +48,7 @@ public class MyLinkedList extends MyAbstractList {
         }
         size--;
     }
-
+ 
     /**
      * Thêm vào cuối list phần tử có dữ liệu payload.
      * @param payload

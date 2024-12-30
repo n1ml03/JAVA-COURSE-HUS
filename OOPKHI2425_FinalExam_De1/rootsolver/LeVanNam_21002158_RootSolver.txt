@@ -1,0 +1,9 @@
+Phuong phap Bisection
+Nghiem cua ham sin(x).x-3 tren khoang [12, 14]: 12.802892208099365
+
+Phuong phap Newtion-Raphson
+Nghiem cua ham sin(x).x-3 tren khoang [12, 14]: 12.802891770848982
+
+Phuong phap Secant
+Nghiem cua ham sin(x).x-3 tren khoang [12, 14]: 12.802891770848994
+
